@@ -23,7 +23,7 @@ mixin post(post, index)
         else
           != post.content
           if post.media && !post.except
-            h3(): a(src = "//" + config.staticRoot + post.media) 下载链接
+            h3(): a(href = "//" + config.staticRoot + post.media) 下载链接
 
     div
       style(clear="both")
