@@ -1,19 +1,19 @@
 mixin post(post, index)
   article.post
     header.post__head
+      div.post__podcast__image
+        if post.image && !post.ignore_image
+          img(src = "//" + config.staticRoot + post.image, alt = 'featured-image')
+        else if post.img && index != 'index'
+          img(src = post.img, alt = 'featured-image')
       time.post__time(datetime = date_xml(post.date))
         = date(post.date, theme.date_format)
       if index == 'archive'
         h1.post__title: a(href = config.root + post.path)
           = post.title
       else
-        div
-          h1.post__podcast__title: a(href = config.root + post.path)
-            = post.title
-          if post.image && !post.ignore_image
-            div.post__podcast__image(): img(src = "//" + config.staticRoot + post.image, alt = 'featured-image')
-          else if post.img && index != 'index'
-            a.post__image(href = config.root + post.path): img(src = post.img, alt = 'featured-image')
+        h1.post__podcast__title: a(href = config.root + post.path)
+          = post.title
     if index != 'archive'
       div.post__main.echo
         if post.media && !post.except
@@ -37,5 +37,5 @@ mixin post(post, index)
           - })
       if post.excerpt && index == 'index'
         a.post__more.u-fr(href = config.root + post.path + '#more')= theme.excerpt_link
-      else
+      else if !(post.excerpt && index == 'archive')
         a.post__foot-link.u-fr(href = config.root + post.path + '#disqus_thread')= theme.comment_link
