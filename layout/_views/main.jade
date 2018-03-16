@@ -5,13 +5,17 @@ html
   body
     header.head
       h1.head-title.u-fl: a(href = config.root)
-        = config.title
+        if config.title_img
+          img(src = config.title_img, width = "75%")
+        else
+          = config.title
       include nav
     main.main
       block main
     footer.foot
       div.foot-copy.u-fl
         != '&copy; ' + date(new Date(), 'YYYY') + ' ' + (config.author || config.title)
+        <a href='https://playmusic.app.goo.gl/?ibi=com.google.PlayMusic&amp;isi=691797987&amp;ius=googleplaymusic&amp;apn=com.google.android.music&amp;link=https://play.google.com/music/m/Ihwsr75yewhfa4uqmuv2tda6l2a?t%3D%25E5%25BC%25A6%25E7%2590%25B4%25E9%259F%25B3%25E8%2595%25B4%26pcampaignid%3DMKT-na-all-co-pr-mu-pod-16' rel='nofollow'><img width='125px' alt='Listen on Google Play Music' src='https://play.google.com/intl/en_us/badges-music/images/badges/en_badge_web_music.png'/></a>
         if theme.themes_mata
           bdi
             != theme.themes_mata
