@@ -1,0 +1,14 @@
+extends _views/main
+include _views/post
+include _views/menu
+
+block main
+  each post in page.posts.data
+    + post(post, 'tag')
+
+block head
+  title
+    = `${page.tag} - ${config.title}`
+
+block menu
+  + menu('tag')

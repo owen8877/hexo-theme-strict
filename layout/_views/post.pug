@@ -1,0 +1,47 @@
+mixin post(post, index)
+  article.post
+    header.post__head
+      .post__podcast__image
+        if post.image && !post.ignore_image
+          img(src = `//${config.staticRoot}${post.image}`
+            alt = 'featured-image')
+        else if post.img && index !== 'index'
+          img(src = post.img
+            alt = 'featured-image')
+      time.post__time(datetime = date_xml(post.date))
+        = date(post.date, theme.date_format)
+      if index === 'archive'
+        h1.post__title: a(href = config.root + post.path)
+          = post.title
+      else
+        h1.post__podcast__title: a(href = config.root + post.path)
+          = post.title
+    if index !== 'archive'
+      .post__main.echo
+        if post.media && !post.except
+          audio.post__audio(src = `//${config.staticRoot}${post.media}`
+            controls
+            preload='metadata')
+        if post.excerpt && index === 'index'
+          != post.excerpt
+        else
+          != post.content
+          if post.media && !post.except
+            h3
+              a(href = `//${config.staticRoot}${post.media}`) 下载链接
+
+    div
+      style(clear='both')
+
+    footer.post__foot.u-cf
+      if post.tags && post.tags.length
+        ul.post__tag.u-fl
+          each tag in post.tags.data
+            li.post__tag__item: a.post__tag__link(href = config.root + tag.path)
+              = tag.name
+      if post.excerpt && index === 'index'
+        a.post__more.u-fr(href = `${config.root}${post.path}#more`)
+          = theme.excerpt_link
+      else if !(post.excerpt && index === 'archive')
+        a.post__foot-link.u-fr(href = `${config.root}${post.path}#disqus_thread`)
+          = theme.comment_link

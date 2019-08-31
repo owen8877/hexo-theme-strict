@@ -1,0 +1,19 @@
+extends _views/main
+include _views/post
+include _views/menu
+
+block main
+  - let time
+  each post in site.posts.sort('date', 'desc').data
+    - const year = post.date.year()
+    if time !== year
+      if time
+        h2.archive-title
+          = year
+      else
+        - time = year
+    + post(post, 'archive')      
+
+block head
+  title
+    = `Archives - ${config.title}`

@@ -1,12 +1,12 @@
+extends _views/main
 include _views/post
 include _views/menu
-extends _views/main
 
 block main
-  +post(page, 'post')
+  + post(page, 'post')
   if config.comment.active
-    div.comments#comments
-      div(id="hypercomments_widget")
+    #comments.comments
+      #hypercomments_widget
       script.
         _hcwp = window._hcwp || [];
         _hcwp.push({widget:"Stream", widget_id: #{config.comment.id}});
@@ -19,11 +19,13 @@ block main
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hcc, s.nextSibling);
         })();
-      a(href="http://hypercomments.com", rel = "nofollow", class="hc-link", title="comments widget") comments powered by HyperComments
+      a.hc-link(href='http://hypercomments.com'
+        rel = 'nofollow'
+        title='comments widget') comments powered by HyperComments
 
 block head
   title
-    = page.title + ' - ' + config.title
+    = `${page.title} - ${config.title}`
 
 block menu
-  +menu('post')
+  + menu('post')
